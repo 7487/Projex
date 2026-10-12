@@ -733,3 +733,9 @@ import { ProjectCard } from '@manningworks/projex'
 ```
 
 Both approaches work. The CLI gives you ownership of the code, while package imports are easier to update.
+
+---
+
+## Agent Skill
+
+Prefer to let a coding agent drive the CLI? The repo ships an agent skill at [`skills/projex/`](https://github.com/ManningWorks/Projex/tree/main/skills/projex) that teaches any coding agent to drive the Projex CLI end-to-end — `init`, components, content, and config. Install by copying `skills/projex/` into your agent's skills directory (e.g. `.claude/skills/`). Added in [PR #40](https://github.com/ManningWorks/Projex/pull/40).
