@@ -101,6 +101,7 @@ Invoke @documentation-manager agent to verify all documentation is complete and 
   - READMEs reflect actual functionality
   - Migration guides exist for breaking changes
   - Documentation build succeeds without errors
+- Verify agent skill drift: diff `skills/projex/SKILL.md` against current CLI `--help` output and flags; update the skill in the release PR if drifted
 
 **Before proceeding:**
 - If @documentation-manager reports issues, fix them or confirm they're acceptable
