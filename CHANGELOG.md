@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`skills/projex/` agent skill** — A new end-user agent skill (`SKILL.md` + `references/cli-help.md` drift baseline) that teaches any coding agent to drive Projex end-to-end: `init`, components and themes, non-interactive content operations, the `projex.config.ts` field reference, provider environment variables, and troubleshooting. Every CLI example is verified against the live `--help` output and run non-interactively.
+
 ---
 
 ## [1.6.0] - 2026-08-19

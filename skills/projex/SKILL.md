@@ -34,6 +34,8 @@ Target stack: **Next.js** (required for the documented page patterns), Node.js
 
 ## 1. Init
 
+> **Published-package gotcha:** `@manningworks/projex` declares its CLI runtime deps (`commander`, `ts-morph`, `chalk`, `@inquirer/prompts`) as *optional* peerDependencies, so a plain `npx @manningworks/projex …` or a fresh `npm install @manningworks/projex` **crashes with `ERR_MODULE_NOT_FOUND` on the first command** — install the four peers once (see Troubleshooting) or run from a source build (`pnpm build`).
+
 ```bash
 npx @manningworks/projex init -y              # basic scaffold, no prompts
 npx @manningworks/projex init --github -y     # auto-discover GitHub repos, no prompts
@@ -54,7 +56,10 @@ Verified non-interactive behavior:
 - `init --github -y` derives the GitHub username from **`git config user.name`**
   — if that is not a real GitHub handle (e.g. a full name) you get
   `GitHub user "X" not found` or someone else's repos. Set
-  `git config user.name <github-handle>` first. With `--yes`, forks are
+  `git config user.name <github-handle>` first. If `user.name` is
+  unset/empty, a warning (`⚠ Could not detect GitHub username from git
+  config`) is printed and the **basic scaffold is written instead** — no
+  error, exit 0. With `--yes`, forks are
   excluded; archived repos, `*.template`, `*.github.io` and repos without a
   description are filtered out. Generated entries: `type: 'github'`,
   `status: 'active'`, `featured: false`, and **`background: null, why: null` —
@@ -228,7 +233,7 @@ npx @manningworks/projex add post <project-id> --title "Announcing v1" --date 20
 - `<project-id>` must exist, else exit 1 with the valid id list.
 - learning + challenge both append to `struggles`
   (`{ type: 'learning'|'challenge', text }`); use `challenge` for obstacles.
-- `--date` must be `YYYY-MM-DD`.
+- `--date` expects format `YYYY-MM-DD` (prompt-validated; flag values are not checked).
 - **`--url` on `add post` is required in practice**: omitting it prompts
   (cancels non-interactively; nothing added).
 
@@ -272,7 +277,7 @@ npx @manningworks/projex remove post <id> --index 0
 
 ```bash
 npx @manningworks/projex list
-# table: ID | Type | Status | Featured (★) | Name
+# table: (index) | ID | Type | Status | Featured (★) | Name
 ```
 
 No flags. Use it to discover ids before edit/remove.
@@ -289,7 +294,7 @@ export const projects = defineProjects([
 ], {
   commits: 3,                // recent commits to fetch for github/hybrid (default 0)
   fetchNpmTimestamps: false, // fetch npm createdAt/updatedAt for date sorting
-  onError: 'throw',          // 'throw' | 'warn' | 'silent' — data-fetch error policy
+  onError: 'throw',          // 'throw' | 'warn' | 'silent' (default: 'warn') — data-fetch error policy
 })
 ```
 
@@ -374,6 +379,8 @@ your build environment** (`.env.local` locally, CI secrets for deploys).
 `LEMONSQUEEZY_TOKEN`.
 
 ## 6. Troubleshooting
+
+**`ERR_MODULE_NOT_FOUND` on the first CLI command (e.g. `Cannot find package 'commander'`).** The published `@manningworks/projex` declares its CLI runtime deps (`commander`, `ts-morph`, `chalk`, `@inquirer/prompts`) as *optional* `peerDependencies`, so npm/npx do not install them and the first command crashes before it runs. Fix: `npm install commander ts-morph chalk @inquirer/prompts` (install the package's declared `peerDependencies`; do not pin versions), or run from a source build (`pnpm build`) where the peers are present.
 
 **`Validation failed ... Expected string, received null` after `init --github`.**
 Generated entries contain `background: null` / `why: null`, but the schema
