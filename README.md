@@ -98,7 +98,7 @@ The CLI automatically installs the `@manningworks/projex` package as a dependenc
 
 ### Agent skill
 
-The repo ships an agent skill at [`skills/projex/`](https://github.com/ManningWorks/Projex/tree/skill/projex-agent-skill/skills/projex) that teaches any coding agent to drive the Projex CLI end-to-end — `init`, components, content, and config. Install by copying `skills/projex/` into your agent's skills directory (e.g. `.claude/skills/`). The skill lands on `main` via [PR #40](https://github.com/ManningWorks/Projex/pull/40).
+The repo ships an agent skill at [`skills/projex/`](https://github.com/ManningWorks/Projex/tree/main/skills/projex) that teaches any coding agent to drive the Projex CLI end-to-end — `init`, components, content, and config. Install by copying `skills/projex/` into your agent's skills directory (e.g. `.claude/skills/`). Added in [PR #40](https://github.com/ManningWorks/Projex/pull/40).
 
 ## Documentation
 
